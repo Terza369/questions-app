@@ -1,0 +1,73 @@
+<%- include('../includes/head.ejs') %>
+
+<div class="container pt-3">
+
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="float-left">
+                <h2><%= questionGroup.name %></h2>
+            </div>
+            <div class="float-left" style="margin-left: 1rem;">
+                <form action="/delete-question-group" method="POST">
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-light">Delete</button>
+                        <input type="hidden" name="id" value="<%= questionGroup._id %>">
+                        <a href="/edit-question-group/<%= questionGroup._id %>" class="btn btn-light">Edit</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-2 text-right">
+            <a type="button" class="btn btn-primary" href="/add-question/<%= questionGroup._id %>">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p>By:
+                <% if(questionGroup.creator == false) { %>
+                    <%= questionGroup.creator.name %>
+                <% } else { %>
+                    No creator
+                <% } %>
+            </p>
+        </div>
+    </div>
+
+    <% if(questionGroup.questions.length > 0) { %>
+        <div id="accordion">
+            <% for (let question of questionGroup.questions) { %>
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link btn-block" data-toggle="collapse" href="#collapse-<%= question._id %>" style="color: black;">
+                        <%= question.title %>
+                        </a>
+                    </div>
+                    <div id="collapse-<%= question._id %>" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        <%= question.content %>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="btn-group">
+                                    <form action="/delete-question" method="POST">
+                                        <input type="hidden" name="questionGroupId" value="<%= questionGroup._id %>">
+                                        <input type="hidden" name="questionId" value="<%= question._id %>">
+                                        <button type="submit" class="btn btn-link">Delete</button>
+                                        <a href="/edit-question/<%= questionGroup._id %>/<%= question._id %>" class="btn btn-link">Edit</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <% } else { %>
+        <p>There are no questions in this group</p>
+    <% } %>
+</div>
+
+<%- include('../includes/end.ejs') %>

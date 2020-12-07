@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+
+<div class="container pt-3">
+    <h2><%= editing ? question.title : 'New question' %></h2>
+    <form action="<%= editing ? '/edit-question' : '/add-question' %>" method="POST">
+        <div class="form-group pt-2">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="<%= editing ? question.title : 'Enter title' %>" 
+            value="<%= editing ? question.title : '' %>" 
+            id="title" 
+            name="title">
+        </div>
+        <div class="form-group">
+            <textarea 
+                class="form-control" 
+                placeholder="<%= editing ? question.content : 'Enter content' %>" 
+                id="content" 
+                name="content"><%= editing ? question.content : '' %></textarea>
+        </div>
+        <input type="hidden" name="questionGroupId" value="<%= questionGroupId %>">
+        <% if(editing) { %>
+            <input type="hidden" name="questionId" value="<%= question._id %>">
+        <% } %>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+</div>
+
+<%- include('../includes/end.ejs') %>

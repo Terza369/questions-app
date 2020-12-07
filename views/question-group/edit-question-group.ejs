@@ -1,0 +1,16 @@
+<%- include('../includes/head.ejs') %>
+
+<div class="container pt-3">
+    <h2><%= editing ? questionGroup.name : 'New question group' %></h2>
+    <form action="<%= editing ? '/edit-question-group' : '/add-question-group' %>" method="POST">
+        <div class="form-group pt-2">
+          <% if(editing) { %>
+          <input type="hidden" name="_id" value="<%= questionGroup._id %>">
+          <% } %>
+          <input type="text" class="form-control" placeholder="<%= editing ? questionGroup.name : 'Enter group name' %>" value="<%= editing ? questionGroup.name : '' %>" id="name" name="name">
+        </div>
+        <button type="submit" class="btn btn-primary" ><%= editing ? 'Save' : 'Submit' %></button>
+    </form>
+</div>
+
+<%- include('../includes/end.ejs') %>

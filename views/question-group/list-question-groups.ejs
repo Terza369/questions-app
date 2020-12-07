@@ -1,0 +1,68 @@
+<%- include('../includes/head.ejs') %>
+
+<div class="container pt-3">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Question groups</h2>
+        </div>
+        <div class="col-sm-4 text-right">
+            <a type="button" class="btn btn-primary" href="/add-question-group">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <% if(questionGroups.length > 0) { %>
+        <% for (let questionGroup of locals.questionGroups) { %>
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link btn-block" href="/question-group/<%= questionGroup._id %>" style="color: black;">
+                        <span style="font-size: large;"><%= questionGroup.name %></span>
+                        <span style="font-size: smaller;">By:
+                        <% if(questionGroup.creator == false) { %>
+                            <%= questionGroup.creator.name %>
+                        <% } else { %>
+                            No creator
+                        <% } %>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        <% } %>
+        <!-- <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Creator</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let questionGroup of locals.questionGroups) { %>
+                <tr onclick="location.href = '/question-group/<%= questionGroup._id %>'" onmouseover="this.style.cursor = 'pointer'">
+                        <td><%= questionGroup.name %></td>
+                        <% if(questionGroup.creator == false) { %>
+                            <td><%= questionGroup.creator.name %></td>
+                        <% } else { %>
+                            <td>No creator</td>
+                        <% } %>
+                        <td>
+                            <div class="form-row">
+                                <form action="/delete-question-group" method="POST" class="col-sm-3">
+                                    <input type="hidden" name="id" value="<%= questionGroup._id %>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                <div class="col-sm-9">
+                                    <a href="/edit-question-group/<%= questionGroup._id %>" class="btn btn-info">Edit</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table> -->
+    <% } else { %>
+        <p>There are no question groups</p>   
+    <% } %>
+  </div>
+
+<%- include('../includes/end.ejs') %>
