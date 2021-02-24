@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(questionGroupRoutes);
 app.use(questionRoutes);
 
-const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@simplecode.1lapm.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
         app.listen(process.env.PORT || 3000);
